@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="row">
+    <h2>注文履歴詳細</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <p><b>注文情報</b></p>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>注文日</td>
+            <td>
+              <%= @order.created_at.strftime('%Y/%m/%d') %>
+            </td>
+          </tr>
+          <tr>
+            <td>配送先</td>
+            <td>
+              <span><%= @order.postal_code %></span><br>
+      				<span><%= @order.address %></span><br>
+      				<span><%= @order.name %></span>
+            </td>
+          </tr>
+          <tr>
+            <td>支払方法</td>
+            <td>
+              <%= @order.payment_method %>
+            </td>
+          </tr>
+          <tr>
+            <td>ステータス</td>
+            <td>
+              <%= @order.status %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-6">
+      <p><b>請求情報</b></p>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>商品合計</td>
+            <td><%= @order.total_payment - @order.shipping_cost %></td>
+          </tr>
+          <tr>
+            <td>配送料</td>
+            <td>
+              <%= @order.shipping_cost %>
+            </td>
+          </tr>
+          <tr>
+            <td>ご請求額</td>
+            <td>
+              <%= @order.total_payment %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <p><b>注文内容</b></p>
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th>商品</th>
+            <th>単価（税込）</th>
+            <th>個数</th>
+            <th>小計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order.order_items.each do |oi| %>
+            <tr>
+              <td>
+                <%= oi.item.name %>
+              </td>
+              <td>
+                <%= (oi.price * @tax).round %>
+              </td>
+              <td>
+                <%= oi.amount %>
+              </td>
+              <td>
+                <%= oi.amount * (oi.price * @tax).round %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <%= attachment_image_tag @item, :image, format: 'jpg', fallback: "no_image.jpg", size: 245 %>
+    </div>
+    <div class="col-md-8">
+      <h2><%= @item.name %></h2>
+      <h4><%= @item.introduction %></h4>
+      <% if @item.is_active == true %>
+        <h2>¥<%= ( @item.price * @tax ).round %>（税込）</h2>
+      <% else %>
+        <h2>売り切れ</h2>
+      <% end %>
+      <%= form_with model: @cart_item, url: cart_items_path, local: true do |form| %>
+        <%= form.number_field :amount,placeholder: "個数選択",min: 1 %>
+        <%= form.hidden_field :item_id,:value =>@item.id %>
+        <%= form.submit 'カートにいれる' , class: "btn btn-success" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+

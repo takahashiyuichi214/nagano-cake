@@ -10,6 +10,98 @@
   </head>
 
   <body>
+    <header id="header" class="navbar navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <% if request.url.include?('admin') %>
+            <a href="/admin"><span class="navbar-brand mb-0 h1">長野ケーキ(会員サイト)</span></a>
+          <% else %>
+            <a href="/"><span class="navbar-brand mb-0 h1">長野ケーキ</span></a>
+          <% end %>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav my-2 my-lg-0">
+              <% if request.url.include?('admin') %>
+                <% if admin_signed_in? %>
+                  <li class="nav-item btn btn-outline-secondary me-2">
+                    <%= link_to "商品一覧", admin_items_path, :style=>"color:black;" %>
+                  </li>
+                  <li class="nav-item btn btn-outline-secondary me-2">
+                    <%= link_to "会員一覧", admin_customers_path, :style=>"color:black;" %>
+                  </li>
+                  <li class="nav-item btn btn-outline-secondary me-2">
+                    <%= link_to "注文履歴一覧", admin_orders_path, :style=>"color:black;" %>
+                  </li>
+                  <li class="nav-item btn btn-outline-secondary me-2">
+                    <%= link_to "ジャンル一覧", admin_genres_path, :style=>"color:black;" %>
+                  </li>
+                  <li class="nav-item btn btn-outline-secondary me-2">
+                    <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, :style=>"color:black;" %>
+                  </li>
+                <% else %>
+                  <li class="nav-item btn btn-outline-secondary me-2">
+                    <%= link_to "About", "/about", :style=>"color:black;" %>
+                  </li>
+                  <li class="nav-item btn btn-outline-secondary me-2">
+                    <%= link_to "商品一覧", items_path, :style=>"color:black;" %>
+                  </li>
+                  <li class="nav-item btn btn-outline-secondary me-2">
+                    <%= link_to "新規登録", new_customer_registration_path, :style=>"color:black;" %>
+                  </li>
+                  <li class="nav-item btn btn-outline-secondary me-2">
+                    <%= link_to "ログイン(管理者用)", new_admin_session_path, :style=>"color:black;" %>
+                  </li>
+                <% end %>
+              <% elsif customer_signed_in? %>
+                <li class="nav-item">
+                  ようこそ、<%= current_customer.first_name %>さん！
+                </li>
+                <li class="nav-item btn btn-outline-secondary me-2">
+                  <%= link_to "マイページ", "/customers/my_page", :style=>"color:black;" %>
+                </li>
+                <li class="nav-item btn btn-outline-secondary me-2">
+                  <%= link_to "商品一覧", items_path, :style=>"color:black;" %>
+                </li>
+                <li class="nav-item btn btn-outline-secondary me-2">
+                  <%= link_to "カート", cart_items_path, :style=>"color:black;" %>
+                </li>
+                <li class="nav-item btn btn-outline-secondary me-2">
+                  <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, :style=>"color:black;" %>
+                </li>
+              <% else %>
+                <li class="nav-item btn btn-outline-secondary me-2">
+                  <%= link_to "About", "/about", :style=>"color:black;" %>
+                </li>
+                <li class="nav-item btn btn-outline-secondary me-2">
+                  <%= link_to "商品一覧", items_path, :style=>"color:black;" %>
+                </li>
+                <li class="nav-item btn btn-outline-secondary me-2">
+                  <%= link_to "新規登録", new_customer_registration_path, :style=>"color:black;" %>
+                </li>
+                <li class="nav-item btn btn-outline-secondary me-2">
+                  <%= link_to "ログイン", new_customer_session_path, :style=>"color:black;" %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+
+
+        </div>
+
+      </nav>
+    </header>
+    <div>
+        <% flash.each do |key, value| %>
+          <% key = "info" if key == "notice" %>
+          <% key = "danger" if key == "alert" %>
+          <%= content_tag :div, value, class: "alert alert-#{key}" %>
+        <% end %>
+      </div>
+    <footer class="footer"></footer>
+
     <%= yield %>
   </body>
 </html>
