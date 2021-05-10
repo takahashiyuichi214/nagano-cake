@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <h2>商品編集</h2>
+  </div>
+  <div class="row">
+    <%= form_with model: @item,url: admin_item_path(@item.id), local: true do |form| %>
+      <div class="col-xs-8">
+        <p>商品画像 <%= form.attachment_field :image %> </p>
+        <p>商品名 <%= form.text_field :name %> </p>
+        <p>商品説明 <%= form.text_area :introduction %> </p>
+        <p>ジャンル <%= form.collection_select :genre_id, Genre.all, :id, :name %> </p>
+        <p>税抜価格 <%= form.text_field :price %>円 </p>
+        <p>販売ステータス
+          <%= form.radio_button :is_active,:true %>
+          <%= form.label :is_active, "販売中", {value: :true, style: "display: inline-block;"} %>
+          <%= form.radio_button :is_active,:false %>
+          <%= form.label :is_active, "販売停止中", {value: :false, style: "display: inline-block;"} %>
+        </p>
+        <%= form.submit "変更を保存", class: "btn btn-success" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

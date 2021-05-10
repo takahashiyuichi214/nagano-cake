@@ -1,0 +1,27 @@
+
+[1mFrom:[0m /home/ec2-user/.rvm/gems/ruby-2.6.3/gems/pry-0.13.1/lib/pry/pry_instance.rb:265 Pry#eval:
+
+    [1;34m255[0m: [32mdef[0m [1;34meval[0m(line, options = {})
+    [1;34m256[0m:   [32mreturn[0m [1;36mfalse[0m [32mif[0m @stopped
+    [1;34m257[0m: 
+    [1;34m258[0m:   exit_value = [1;36mnil[0m
+    [1;34m259[0m:   exception = catch([33m:raise_up[0m) [32mdo[0m
+    [1;34m260[0m:     exit_value = catch([33m:breakout[0m) [32mdo[0m
+    [1;34m261[0m:       handle_line(line, options)
+    [1;34m262[0m:       [1;34m# We use 'return !@stopped' here instead of 'return true' so that if[0m
+    [1;34m263[0m:       [1;34m# handle_line has stopped this pry instance (e.g. by opening pry_instance.repl and[0m
+    [1;34m264[0m:       [1;34m# then popping all the bindings) we still exit immediately.[0m
+ => [1;34m265[0m:       [32mreturn[0m !@stopped
+    [1;34m266[0m:     [32mend[0m
+    [1;34m267[0m:     exception = [1;36mfalse[0m
+    [1;34m268[0m:   [32mend[0m
+    [1;34m269[0m: 
+    [1;34m270[0m:   @stopped = [1;36mtrue[0m
+    [1;34m271[0m:   @exit_value = exit_value
+    [1;34m272[0m: 
+    [1;34m273[0m:   [1;34m# TODO: make this configurable?[0m
+    [1;34m274[0m:   raise exception [32mif[0m exception
+    [1;34m275[0m: 
+    [1;34m276[0m:   [1;36mfalse[0m
+    [1;34m277[0m: [32mend[0m
+

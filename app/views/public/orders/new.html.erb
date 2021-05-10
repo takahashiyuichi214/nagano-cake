@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row">
+    <h2>注文情報入力</h2>
+  </div>
+  <div class="row">
+    <%= form_with model: @order, url: orders_confirm_path, local: true do |form| %>
+      <div class="col-md-10 col-md-offset-1">
+        <p><b>支払方法</b></p>
+        <div class="form-group">
+          <%= form.radio_button :payment_method,0 %>
+          <%= form.label :payment_method, "クレジットカード", value: 0 %>
+          <%= form.radio_button :payment_method,1 %>
+          <%= form.label :payment_method, "銀行振込", value: 1 %>
+        </div>
+        <p><b>お届け先</b></p>
+        <div class="form-group">
+          <%= form.radio_button :address_option, 1 %>
+          <%= form.label :address_option, "ご自身の住所",value: 1 %> </br>
+          〒<%= @customer.postal_code %>
+          <%= @customer.address %> </br>
+          <%= @customer.last_name %> <%= @customer.first_name %>
+        </div>
+        <div class="form-group">
+          <%= form.radio_button :address_option, 2 %>
+          <%= form.label :address_option, "登録済住所から選択",value: 2 %>
+          <%= form.collection_select :address_id, @addresses, :id, :address %>
+        </div>
+        <div class="form-group">
+          <div>
+            <%= form.radio_button :address_option, 3 %>
+            <%= form.label :address_option, "新しいお届け先",value: 3 %>
+          </div>
+          <div>
+            <%= form.label :postal_code, "郵便番号(ハイフンなし)" %>
+            <%= form.text_field :postal_code, placeholder:"0000000" %>
+          </div>
+          <div>
+            <%= form.label :address, "住所" %>
+            <%= form.text_field :address, placeholder:"東京都渋谷区代々木神園町0-0", size: "40" %>
+          </div>
+          <div>
+            <%= form.label :name, "宛名" %>
+            <%= form.text_field :name, placeholder:"令和道子" %>
+          </div>
+        </div>
+      </div>
+
+
+    <div class="col-md-2 col-md-offset-5">
+      <%= form.submit "確認画面へ進む" , class: "btn btn-primary" %>
+    </div>
+
+    <% end %>
+  </div>
+</div>
+
+
