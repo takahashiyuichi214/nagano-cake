@@ -67,7 +67,7 @@
                 <%= (op.price * @tax).round * op.amount %>
               </td>
               <td>
-                <%= form_with model: @order_item, url: admin_order_path, local: true do |form| %>
+                <%= form_with model: op, url: admin_order_item_path(op.id), local: true do |form| %>
                   <%= form.select :making_status, OrderItem.making_statuses.keys %>
                   <%= form.submit "更新", class: "btn btn-success" %>
                 <% end %>
