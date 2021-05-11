@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     get '/about' => 'public/homes#about'
 
   scope module: :public do
-    get 'customers/my_page' => 'customers#show'
+    post 'customers/my_page' => 'customers#show'
+    get 'customers/my_page' => 'customers#show', as: :customer
+
     get 'customers/unsubscribe' => 'customers#unsubscribe'
     patch 'customers/withdraw' => 'customers#withdraw'
     resources :customers, only: [:edit, :update]
@@ -46,6 +48,6 @@ Rails.application.routes.draw do
       resources :customers, only: [:index,:show,:edit,:update]
       get "customers/:id/list" => "customers#list", as: "list"
       resources :orders, only: [:index,:show,:update]
-      resources :order_items, only: [:updateu]
+      resources :order_items, only: [:update]
   end
 end
